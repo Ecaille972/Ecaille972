@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head><script>/*IMGV*/window.__V='20261124-182254';</script>
+<head><script>/*IMGV*/window.__V='20261125-185300';</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Écaille</title><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="theme-color" content="#01091a"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Écaille"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -2342,8 +2342,9 @@ document.addEventListener('click',e=>{
   if(t.id==='reset'&&DEV){if(t.dataset.sure){S=fresh();save();delete t.dataset.sure;renderAll();toast('Partie réinitialisée')}else{t.dataset.sure=1;toast('Touche encore pour tout effacer');setTimeout(()=>delete t.dataset.sure,4000)}return}
 });
 document.addEventListener('input',e=>{if(e.target.id==='qs'){qs=e.target.value;const p=e.target.selectionStart;renderColl();const n=$('qs');n.focus();try{n.setSelectionRange(p,p)}catch(_){}}});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('veil').hidden){if(snap)return cancelOpen();if(reveal&&document.querySelector('.detail'))showReveal();else closeVeil()}});
-$('veil').addEventListener('click',e=>{if(e.target===$('veil')){if(reveal&&document.querySelector('.detail'))showReveal();else closeVeil()}});
+const revBusy=()=>!!(reveal&&!document.querySelector('.detail')&&(reveal.idx||0)<reveal.cards.length);/* booster en cours d'ouverture : on ne ferme pas par un clic à côté */
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('veil').hidden){if(revBusy())return;if(snap)return cancelOpen();if(reveal&&document.querySelector('.detail'))showReveal();else closeVeil()}});
+$('veil').addEventListener('click',e=>{if(e.target===$('veil')){if(revBusy())return;if(reveal&&document.querySelector('.detail'))showReveal();else closeVeil()}});
 
 
 /* vente des doublons */
