@@ -73,7 +73,12 @@ const d=document.createElement('div');d.id='lg';d.setAttribute('role','dialog');
 
 const lgToday=()=>S&&S.lg&&S.lg.d===todayStr();
 function lgDot(){const b=document.getElementById('u-cal');if(!b)return;let on=false;try{on=!!(typeof S!=='undefined'&&S&&ecoOn()&&!lgToday())}catch(e){}b.classList.toggle('has',on)}
-setInterval(lgDot,2500);document.addEventListener('ecaille:me',()=>setTimeout(lgDot,1500));
+const NK='ecl_lgnews1';
+(function(){const st=document.createElement('style');st.textContent='#lgn{position:fixed;inset:0;z-index:70;display:none;align-items:center;justify-content:center;background:rgba(3,5,10,.82);padding:20px}#lgn.on{display:flex}#lgn .bx{max-width:340px;width:100%;background:#0b1224;border:2px solid #ffb81f;border-radius:18px;padding:22px 18px;text-align:center;color:#e8eefc;box-shadow:0 0 30px -6px #ffb81f}#lgn h3{margin:0 0 8px;font-size:20px;font-style:italic;font-weight:800;color:#ffb81f}#lgn p{margin:0 0 16px;font-size:14px;line-height:1.45;color:#b9c4de}#lgn button{display:block;width:100%;border:0;border-radius:12px;padding:12px;font-weight:800;font-size:15px;cursor:pointer;background:#ffb81f;color:#1a1200}#lgn button.s{background:none;color:#8d9bbd;margin-top:6px;font-weight:600}';document.head.appendChild(st);
+const d=document.createElement('div');d.id='lgn';d.innerHTML='<div class="bx"><h3>Nouveau : récompenses de connexion !</h3><p>Connecte-toi chaque jour pour gagner des perles, de l\'XP, des boosters et des cartes mystère. Au bout de 30 jours, une carte légendaire t\'attend !</p><button id="lgn-go">Voir mes récompenses</button><button class="s" id="lgn-x">Plus tard</button></div>';document.body.appendChild(d);
+d.addEventListener('click',e=>{const t=e.target;if(t.id==='lgn-go'){d.classList.remove('on');lgOpen()}else if(t.id==='lgn-x'||t===d)d.classList.remove('on')})})();
+function lgNews(){try{if(localStorage.getItem(NK))return;if(!(typeof S!=='undefined'&&S&&ecoOn()))return;window.__lgT=window.__lgT||Date.now();if(Date.now()-window.__lgT<7000)return;if(document.querySelector('#lg.on,#tuto.on,#nwn.on,#whmsg'))return;localStorage.setItem(NK,'1');document.getElementById('lgn').classList.add('on')}catch(e){}}
+setInterval(()=>{lgDot();setTimeout(lgNews,0)},2500);document.addEventListener('ecaille:me',()=>setTimeout(lgDot,1500));
 
 function lgLabel(r){
   if(r.kind==='p')return r.val+' perle'+(r.val>1?'s':'');
