@@ -47,6 +47,7 @@ body.authon #u-cal,body.vopen #u-cal{display:none!important}
 #lg .im .xp{width:60px;height:66px}
 #lg .mq{--c:#1d6fd6;position:relative;width:54px;aspect-ratio:5/7;border-radius:7px;display:grid;place-items:center;border:2px solid var(--c);background:radial-gradient(circle at 50% 35%,#16244a,#070d1f 75%);box-shadow:0 0 14px -2px var(--c),inset 0 0 14px -6px var(--c)}
 #lg .mq b{font:italic 800 34px/1 'Barlow Condensed',sans-serif;color:var(--c);text-shadow:0 0 12px var(--c)}
+#lg .mq.pk{--c:#38b6ff;width:46px;aspect-ratio:3/4.6;border-radius:4px;clip-path:polygon(0 4%,8% 0,16% 4%,24% 0,32% 4%,40% 0,48% 4%,56% 0,64% 4%,72% 0,80% 4%,88% 0,100% 4%,100% 96%,92% 100%,84% 96%,76% 100%,68% 96%,60% 100%,52% 96%,44% 100%,36% 96%,28% 100%,20% 96%,12% 100%,4% 96%,0 96%);border:0;background:linear-gradient(160deg,#17315c,#08122b 70%);box-shadow:inset 0 0 0 2px #38b6ff,inset 0 0 14px -4px #38b6ff}
 #lg .mq.E{--c:#a45cf0}#lg .mq.L{--c:#ffb81f}#lg .mq.C{--c:#6b7da6}
 #lg .lgf{margin-top:12px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:13px 14px;border-radius:14px;background:#0a1122;border:1px solid #1c2849}
 #lg .lgf .t{font-size:14px;color:#c6d3ee}
@@ -83,7 +84,7 @@ function lgMys(rar){return '<div class="mq '+rar+'"><b>?</b></div>'}
 function lgImg(r){
   if(r.kind==='p'){const k=r.val>=40?'n4':'';return '<div class="pr3 '+k+'"><i class="pearl"></i><i class="pearl"></i><i class="pearl"></i></div>'}
   if(r.kind==='xp')return '<svg class="xp" viewBox="0 0 60 66"><path d="M30 3l25 14.500v31L30 63 5 48.500v-31z" fill="#1a1405" stroke="#ffc61a" stroke-width="3.500" stroke-linejoin="round"/><text x="30" y="40" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-style="italic" font-weight="800" font-size="25" fill="#ffc61a">XP</text></svg>';
-  if(r.kind==='b'){const th=(S&&S.theme)||'large';return '<img class="pk" src="pack-'+th+'.webp?v='+(window.__V||'')+'" alt="">'}
+  if(r.kind==='b')return '<div class="mq pk"><b>?</b></div>';
   return lgMys(r.rar||'R')}
 const lgIc={ck:'<svg viewBox="0 0 24 24"><path d="M5 12.500l4.500 4.500L19 7.500"/></svg>',lk:'<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9.500" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>'};
 
