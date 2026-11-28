@@ -3,10 +3,10 @@
 /* ---------- Configuration (en production : table « territoires » modifiable sans toucher au code) ---------- */
 const TERR=[
  {id:'large',n:'Grand Large',lv:1,d:'Les poissons du large'},
- {id:'douce',n:'Eaux douces',lv:10,d:'Rivières, lacs et grands fleuves'},
- {id:'recif',n:'Récifs exotiques',lv:20,d:'Les poissons de récif'},
- {id:'crust',n:'Crustacés & Mollusques',lv:30,d:'Crabes, homards, coquillages'},
- {id:'requins',n:'Requins & Raies',lv:40,d:'Les grands prédateurs'},
+ {id:'douce',n:'Eaux douces',lv:1,d:'Rivières, lacs et grands fleuves'},
+ {id:'recif',n:'Récifs exotiques',lv:1,d:'Les poissons de récif'},
+ {id:'requins',n:'Requins & Raies',lv:25,d:'Les grands prédateurs'},
+ {id:'crust',n:'Crustacés & Mollusques',lv:40,d:'Crabes, homards, coquillages'},
  {id:'abysses',n:'Abysses',lv:50,d:'Lueurs et crocs sous 200 m'}];
 window.S1_CFG={TERR};
 const T=id=>TERR.find(t=>t.id===id);
@@ -195,7 +195,7 @@ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest
 const SL=[
  {bg:'art-large.webp',h:'ÉCAILLE',p:'Les océans renferment encore d\'innombrables secrets. Des rivières sauvages aux profondeurs les plus mystérieuses, des centaines de créatures peuplent un monde que l\'homme n\'a jamais totalement exploré.',vis:()=>'<div class="bigp" style="background-image:url(pack-large.webp);opacity:.95"></div>'},
  {bg:'art-recif.webp',h:'Une collection unique',p:'Deviens un explorateur aquatique : découvre des espèces extraordinaires, complète tes albums et rassemble les cartes les plus rares du monde.',vis:()=>'<div class="fan">'+[[58,'l'],[21,'r'],[59,'m']].map(([i,c])=>'<div class="fc '+c+'">'+cardHTML(F[i],{force:1,nac:0})+'</div>').join('')+'</div>'},
- {bg:'art-abysses.webp',h:'Explore de nouveaux territoires',p:'Tu pars du Grand Large. Gagne de l\'XP, monte de niveau et débloque un nouveau territoire tous les 10 niveaux, jusqu\'aux Abysses.',vis:()=>'<div class="six">'+TERR.map(t=>'<div><i style="background-image:url(pack-'+t.id+'.webp)"></i>'+esc(t.n)+'<b>Niveau '+t.lv+'</b></div>').join('')+'</div>'},
+ {bg:'art-abysses.webp',h:'Explore de nouveaux territoires',p:'Tu pars avec trois territoires : le Grand Large, les Eaux douces et les Récifs exotiques. Gagne de l\'XP, monte de niveau et débloque les Requins au niveau 25, les Crustacés au niveau 40, puis les Abysses au niveau 50.',vis:()=>'<div class="six">'+TERR.map(t=>'<div><i style="background-image:url(pack-'+t.id+'.webp)"></i>'+esc(t.n)+'<b>Niveau '+t.lv+'</b></div>').join('')+'</div>'},
  {bg:'art-large.webp',h:'Ton premier booster',p:'L\'immensité des océans t\'attend. Jusqu\'où iras-tu ? Bienvenue dans ÉCAILLE.',vis:()=>'<div class="bigp" style="background-image:url(pack-large.webp)"></div>'}];
 let si=0;
 function showIntro(n){si=n===undefined?0:n;let e=$('s1i');if(!e){e=document.createElement('div');e.id='s1i';e.setAttribute('role','dialog');e.setAttribute('aria-modal','true');document.body.appendChild(e)}
