@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head><script>/*IMGV*/window.__V='20261128-200000';window.S1_ON=true;</script>
+<head><script>/*IMGV*/window.__V='20261128-210000';window.S1_ON=true;</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Écaille</title><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="theme-color" content="#01091a"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Écaille"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -1327,7 +1327,7 @@ body:not(.dev) #gift,body:not(.dev) #unlock,body:not(.dev) #reset,body:not(.dev)
       <a href="#collection">Collection</a>
       <a href="#marche">Marché</a>
     </nav>
-    <div class="nums" aria-live="polite"><b id="st-b" aria-label="Boosters">0</b><b id="st-p" aria-label="Perles">0</b><b id="st-c" aria-label="Collection">0/280</b><i id="st-t"></i><i id="st-n" hidden></i></div>
+    <div class="nums" aria-live="polite"><b id="st-b" aria-label="Boosters">0</b><b id="st-p" aria-label="Perles">0</b><b id="st-c" aria-label="Collection">0/150</b><i id="st-t"></i><i id="st-n" hidden></i></div>
     <a class="hot" id="gear" href="#marche" aria-label="Réglages et mode test"></a>
   </header>
 
@@ -1480,7 +1480,7 @@ const ACH=[
  ['Collection','Collectionneur','Avoir 25 espèces différentes',25,()=>owned(),50,0],
  ['Collection','Grand collectionneur','Avoir 50 espèces différentes',50,()=>owned(),100,0],
  ['Collection','Naturaliste','Avoir 100 espèces différentes',100,()=>owned(),200,0],
- ['Collection','Encyclopédie vivante','Avoir les 280 espèces',280,()=>owned(),0,5],
+ ['Collection','Encyclopédie vivante','Avoir les 150 espèces',150,()=>owned(),0,5],
  ['Collection','Premier album','Compléter 1 album',1,()=>SETS.filter(x=>albumDone(x.id)).length,100,0],
  ['Collection','Trois albums','Compléter 3 albums',3,()=>SETS.filter(x=>albumDone(x.id)).length,0,2],
  ['Collection','Tous les albums','Compléter les 6 albums',6,()=>SETS.filter(x=>albumDone(x.id)).length,0,5],
@@ -1627,14 +1627,14 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){const o=document.ge
 /* ---------- AMIS ---------- */
 function mkFriends(){
  const D=MK.fr||{friends:[],incoming:[],outgoing:[]};
- mkHero('AMIS','Tes amis','Ajoute un ami avec son pseudo, regarde sa collection et échange tes doublons.',[[D.friends.length,'amis'],[D.incoming.length,'demandes reçues'],[owned()+'/'+280,'ta collection']]);
+ mkHero('AMIS','Tes amis','Ajoute un ami avec son pseudo, regarde sa collection et échange tes doublons.',[[D.friends.length,'amis'],[D.incoming.length,'demandes reçues'],[owned()+'/'+FT(),'ta collection']]);
  let h=mkErrBox()+`<div class="um-sum"><div class="tx">Ajouter un ami par son <b>pseudo</b>${window.__pseudo?' · le tien : <b>'+mke(window.__pseudo)+'</b>':''}</div><input class="mk-in" id="mk-ps" placeholder="Pseudo" maxlength="24" autocapitalize="off" autocomplete="off"><button class="gold" data-mk="fadd">Envoyer</button></div>`;
  if(D.incoming.length)h+=`<div class="mk-h2">Demandes reçues</div><div class="mk-list">${D.incoming.map(r=>`<div class="mk-r"><div class="mk-i"><b>${mke(r.pseudo)}</b><span>veut devenir ton ami</span></div><div class="mk-act"><button class="gold" data-mk="fyes" data-id="${r.id}">Accepter</button><button class="ghostb" data-mk="fno" data-id="${r.id}">Refuser</button></div></div>`).join('')}</div>`;
  if(D.outgoing.length)h+=`<div class="mk-h2">Demandes envoyées</div><div class="mk-list">${D.outgoing.map(r=>`<div class="mk-r"><div class="mk-i"><b>${mke(r.pseudo)}</b><span>en attente de réponse</span></div></div>`).join('')}</div>`;
  h+=`<div class="mk-h2">Mes amis</div>`;
- h+=D.friends.length?`<div class="mk-list">${D.friends.map(f=>`<div class="mk-r"><div class="mk-i"><b>${mke(f.pseudo)}</b><span>${f.owned}/${280} cartes</span></div><div class="mk-act"><button class="gold" data-mk="fview" data-id="${f.id}">Collection</button><button class="ghostb" data-mk="ftrade" data-id="${f.id}">Échanger</button><button class="ghostb mk-x" data-mk="fdel" data-id="${f.id}" aria-label="Retirer ${mke(f.pseudo)}">✕</button></div></div>`).join('')}</div>`:'<p class="mk-empty">Pas encore d’ami. Entre un pseudo ci-dessus.</p>';
+ h+=D.friends.length?`<div class="mk-list">${D.friends.map(f=>`<div class="mk-r"><div class="mk-i"><b>${mke(f.pseudo)}</b><span>${f.owned}/${FT()} cartes</span></div><div class="mk-act"><button class="gold" data-mk="fview" data-id="${f.id}">Collection</button><button class="ghostb" data-mk="ftrade" data-id="${f.id}">Échanger</button><button class="ghostb mk-x" data-mk="fdel" data-id="${f.id}" aria-label="Retirer ${mke(f.pseudo)}">✕</button></div></div>`).join('')}</div>`:'<p class="mk-empty">Pas encore d’ami. Entre un pseudo ci-dessus.</p>';
  if(MK.fv){const c=MK.fv.col||{},n=F.filter(f=>c[f.id]>0).length;
-  h+=`<div class="mk-h2">Collection de ${mke(MK.fv.pseudo)} · ${n}/${280}</div><div class="uc-grid">${F.map(f=>c[f.id]>0?`<div class="um-it">${mkCard(f.id,{nac:MK.fv.nac&&MK.fv.nac[f.id]})}${c[f.id]>1?`<span class="qt">×${c[f.id]}</span>`:''}</div>`:`<div class="um-it dim">${cardHTML(f,{tag:'div',nac:0}).replace(/<span class="lkb">.*?<\/span>/,'')}</div>`).join('')}</div>`}
+  h+=`<div class="mk-h2">Collection de ${mke(MK.fv.pseudo)} · ${n}/${FT()}</div><div class="uc-grid">${F.map(f=>c[f.id]>0?`<div class="um-it">${mkCard(f.id,{nac:MK.fv.nac&&MK.fv.nac[f.id]})}${c[f.id]>1?`<span class="qt">×${c[f.id]}</span>`:''}</div>`:`<div class="um-it dim">${cardHTML(f,{tag:'div',nac:0}).replace(/<span class="lkb">.*?<\/span>/,'')}</div>`).join('')}</div>`}
  $('um-body').innerHTML=h}
 function mkLoadFr(){return mkcall('fr_list').then(r=>{if(r.j){MK.fr=r.j;try{S.life=S.life||{};S.life.f=Math.max(S.life.f||0,r.j.friends.length)}catch(e){};if(MK.tab==='amis')mkFriends();if(MK.tab==='echanger')mkTrade();mkTabs()}})}
 /* ---------- ÉCHANGES ---------- */
@@ -1758,7 +1758,7 @@ function renderProfile(){const v=lvInfo(),t=titleOf(v.L),pc=Math.round(v.into/v.
   let up='';for(let L=v.L+1;L<=Math.min(MAXLV,v.L+4);L++)up+=`<li><b>Niv. ${L}</b><span>${rewardLine(L)}</span></li>`;
   $('profp-b').innerHTML=`<div class="pbig"><div class="plv">${v.L}</div><div><h4>${t}</h4><div class="pbar"><i style="width:${pc}%"></i></div><small>${v.L>=MAXLV?'Niveau maximum':v.into+' / '+v.need+' XP'}</small></div></div>
    ${nxt?`<p class="pnx">Prochain titre : <b>${nxt[1]}</b> au niveau ${nxt[0]}</p>`:''}
-   <div class="pst"><div><b>${S.opened}</b><span>boosters ouverts</span></div><div><b>${own}/280</b><span>espèces</span></div><div><b>${rc.R}</b><span>rares</span></div><div><b>${rc.E}</b><span>épiques</span></div><div><b>${rc.L}</b><span>légendaires</span></div><div><b>${nac}</b><span>nacrées</span></div><div><b>${d.n}</b><span>doublons</span></div><div><b>${al}/5</b><span>albums finis</span></div></div>
+   <div class="pst"><div><b>${S.opened}</b><span>boosters ouverts</span></div><div><b>${own}/${FT()}</b><span>espèces</span></div><div><b>${rc.R}</b><span>rares</span></div><div><b>${rc.E}</b><span>épiques</span></div><div><b>${rc.L}</b><span>légendaires</span></div><div><b>${nac}</b><span>nacrées</span></div><div><b>${d.n}</b><span>doublons</span></div><div><b>${al}/5</b><span>albums finis</span></div></div>
    <h5>Prochaines récompenses</h5><ul class="pup">${up}</ul>
    <h5>Titres</h5><ul class="ptt">${TITLES.map(([l,n])=>`<li class="${v.L>=l?'ok':''}"><b>Niv. ${l}</b><span>${n}</span></li>`).join('')}</ul>
    <p style="text-align:center;font-size:12.5px;opacity:.75;margin:16px 0 4px"><a href="legal.html#mentions" target="_blank" style="color:#7fbaff">Mentions légales</a> · <a href="legal.html#confidentialite" target="_blank" style="color:#7fbaff">Confidentialité</a> · <a href="legal.html#cgu" target="_blank" style="color:#7fbaff">Conditions</a></p>`;
@@ -1768,7 +1768,7 @@ function renderProfile(){const v=lvInfo(),t=titleOf(v.L),pc=Math.round(v.into/v.
 function renderStats(){
   uiTick();
   $('st-b').textContent=BT();$('bpn').textContent=BT();$('st-p').textContent=S.p;
-  const o=owned();$('st-c').textContent=o+'/'+280;
+  const o=owned();$('st-c').textContent=o+'/'+FT();
   $('st-n').textContent=S.opened+' booster'+(S.opened>1?'s':'')+' ouvert'+(S.opened>1?'s':'');
   if(S.b>=MAX)$('st-t').textContent='stock plein';
   else{const r=Math.min(REGEN,Math.max(0,REGEN-(Date.now()-S.last))),m=Math.floor(r/60000),s=Math.floor(r%60000/1000);$('st-t').textContent='prochain dans '+m+':'+String(s).padStart(2,'0')}
@@ -1796,10 +1796,10 @@ const albumDone=id=>{const[a,n]=setCount(id);return a===n};
 function checkAlbums(){S.alb=S.alb||{};SETS.forEach(x=>{if(!S.alb[x.id]&&albumDone(x.id)){S.alb[x.id]=1;S.p+=ALBUM_R.p;S.b+=ALBUM_R.b;addXP(150);toast('Album « '+x.n+' » complété ! +'+ALBUM_R.p+' perles +'+ALBUM_R.b+' boosters',3200)}})}
 function renderColl(){
   const N=NEWUI(),tot=owned();
-  $(N?'uc-sets':'filters').innerHTML=`<button class="chip" data-f="tout" aria-pressed="${filt==='tout'}">Tout ${tot}/${280}</button>`+SETS.map(x=>{const[a,n]=setCount(x.id);return `<button class="chip${a===n?' fin':''}" data-f="${x.id}" aria-pressed="${filt===x.id}">${a===n?'★ ':''}${x.n.split(' ')[0]==='Récifs'?'Récifs':x.n.split(' ')[0]==='Eaux'?'Eaux douces':x.n} ${a}/${n}</button>`}).join('');
+  $(N?'uc-sets':'filters').innerHTML=`<button class="chip" data-f="tout" aria-pressed="${filt==='tout'}">Tout ${tot}/${FT()}</button>`+SETS.map(x=>{const[a,n]=setCount(x.id);return `<button class="chip${a===n?' fin':''}" data-f="${x.id}" aria-pressed="${filt===x.id}">${a===n?'★ ':''}${x.n.split(' ')[0]==='Récifs'?'Récifs':x.n.split(' ')[0]==='Eaux'?'Eaux douces':x.n} ${a}/${n}</button>`}).join('');
   const ids=filt==='tout'?F:F.filter(f=>f.set===filt),a=ids.filter(f=>S.col[f.id]>0).length,p=Math.round(100*a/ids.length),nm=filt==='tout'?'Toute la collection':SETS.find(x=>x.id===filt).n,fin=filt!=='tout'&&a===ids.length;
   const nac=Object.keys(S.nac||{}).filter(i=>filt==='tout'||F[i].set===filt).length;
-  if(N)pHero('uc-hero','TON ALBUM<i>·</i><span style="color:#fff">'+Math.round(100*tot/150)+' %</span>','Ta collection','Retrouve toutes les espèces que tu as pêchées, complète les albums et gagne des récompenses.',[[tot+' / '+280,'espèces'],[Object.keys(S.nac||{}).length,'nacrées'],[Object.keys(S.alb||{}).length+' / '+SETS.length,'albums complets']],pFan(topOwned()));
+  if(N)pHero('uc-hero','TON ALBUM<i>·</i><span style="color:#fff">'+Math.round(100*tot/FT())+' %</span>','Ta collection','Retrouve toutes les espèces que tu as pêchées, complète les albums et gagne des récompenses.',[[tot+' / '+FT(),'espèces'],[Object.keys(S.nac||{}).length,'nacrées'],[Object.keys(S.alb||{}).length+' / '+SETS.length,'albums complets']],pFan(topOwned()));
   if(N)$('uc-bar').innerHTML=`<div class="uc-ab"><div class="t"><b>${nm}</b><span>${a}/${ids.length} · ${p}%</span>${fin?'<em class="bdg">★ Album complété</em>':''}</div><div class="bar"><i style="width:${p}%"></i></div>${filt!=='tout'&&!fin?`<small>Récompense : ${ALBUM_R.p} perles + ${ALBUM_R.b} boosters</small>`:''}<small>✦ Nacrées : ${nac}</small></div>`;else $('albbar').innerHTML=`<div class="ab"><b>${nm}</b><span>${a}/${ids.length} · ${p}%</span>${fin?'<em class="bdg">★ Album complété</em>':filt!=='tout'?`<small>Récompense : ${ALBUM_R.p} perles + ${ALBUM_R.b} boosters</small>`:''}<div class="abar"><i style="width:${p}%"></i></div><small class="nacc">✦ Nacrées : ${nac}</small></div>`;
   $(N?'uc-tools':'filters2').innerHTML=[['all','Toutes'],['C','Communes'],['R','Rares'],['E','Épiques'],['L','Légendaires']].map(([k,n])=>`<button class="chip sm r-${k}" data-rf="${k}" aria-pressed="${rf===k}">${n}</button>`).join('')+
    (N?'<i class="sep"></i>':'')+[['tout','Toutes'],['own','Obtenues'],['miss','Manquantes'],['dup','Doublons']].map(([k,n])=>`<button class="chip sm m" data-mode="${k}" aria-pressed="${mode===k}">${n}</button>`).join('')+
@@ -1841,6 +1841,7 @@ const UNAV=[['boosters','Boosters'],['collection','Collection'],['marche','March
 const todayStr=()=>{const o=parisParts();return o.year+'-'+String(o.month).padStart(2,'0')+'-'+String(o.day).padStart(2,'0')};
 const priceOf=z=>(SHP.find(x=>x[0]===z)||[0,0])[1];
 const BT=()=>window.S1?S1.total():S.b;
+const FT=()=>F.filter(()=>1).length;
 const pctF=w=>w.toFixed(1).replace('.',',')+' %';
 function uiBuild(){
   const nav=UNAV.map(([k,n])=>`<a href="#${k}" data-pg="${k}">${UIC[k]}<span>${n}</span></a>`).join('');
@@ -1990,7 +1991,7 @@ function renderUProfil(){
   const nxt=TITLES.find(x=>x[0]>v.L),nac=Object.keys(S.nac||{}).length;
   let up='';for(let L=v.L+1;L<=Math.min(MAXLV,v.L+4);L++)up+=`<li><b>Niv. ${L}</b><span>${rewardLine(L)}</span></li>`;
   $('u-profb').innerHTML=`<div class="pf-card"><div class="pf-lv">${v.L}</div><div style="flex:1;min-width:0"><h3>${t}</h3><div class="pf-bar"><i style="width:${pc}%"></i></div><div class="u-mu">${v.L>=MAXLV?'Niveau maximum':v.into+' / '+v.need+' XP'}${nxt?' · prochain titre : '+nxt[1]+' (niv. '+nxt[0]+')':''}</div></div></div>
-   <div class="pf-st"><div><b>${S.opened}</b><span>boosters ouverts</span></div><div><b>${owned()}/${280}</b><span>espèces</span></div><div><b>${rc.R}</b><span>rares</span></div><div><b>${rc.E}</b><span>épiques</span></div><div><b>${rc.L}</b><span>légendaires</span></div><div><b>${nac}</b><span>nacrées</span></div></div>
+   <div class="pf-st"><div><b>${S.opened}</b><span>boosters ouverts</span></div><div><b>${owned()}/${FT()}</b><span>espèces</span></div><div><b>${rc.R}</b><span>rares</span></div><div><b>${rc.E}</b><span>épiques</span></div><div><b>${rc.L}</b><span>légendaires</span></div><div><b>${nac}</b><span>nacrées</span></div></div>
    <div class="pf-h">Prochaines récompenses</div><ul class="pf-ls">${up}</ul>
    <div class="pf-h">Titres</div><ul class="pf-ls">${TITLES.map(([l,n])=>`<li class="${v.L>=l?'ok':''}"><b>Niv. ${l}</b><span>${n}${F.filter(f=>f.minL===l).length?' · '+F.filter(f=>f.minL===l).length+' cartes débloquées':''}</span></li>`).join('')}</ul>
    <div class="pf-h">Aide</div><button class="ghostb" id="tuto-again" style="width:auto;padding:0 26px">Revoir le tutoriel</button>${DEV?'<div class="pf-h">Partie (admin)</div><button class="ghostb" id="reset-game" style="width:auto;padding:0 26px">Recommencer ma partie à zéro</button>':''}`;
@@ -1998,7 +1999,7 @@ function renderUProfil(){
 
 /* ---------- Tutoriel ---------- */
 const TUTO=[
- [QIC.b,'BIENVENUE','Bienvenue sur Écaille !','Écaille est un jeu de cartes à collectionner : <b>280 espèces</b> à pêcher. Ton but : <b>les obtenir toutes</b>, compléter les albums et monter de niveau.'],
+ [QIC.b,'BIENVENUE','Bienvenue sur Écaille !','Écaille est un jeu de cartes à collectionner : <b>150 espèces</b> à pêcher. Ton but : <b>les obtenir toutes</b>, compléter les albums et monter de niveau.'],
  [UIC.boosters,'ÉTAPE 1 · BOOSTERS','Ouvre des boosters','Un booster contient <b>5 cartes</b> tirées au hasard. Tu reçois <b>un booster gratuit chaque jour</b> sur la page Boosters. Choisis un univers (Eaux douces, Écaille, Abysses…) puis ouvre-le : les cartes se révèlent une par une.'],
  [QIC.r,'ÉTAPE 2 · RARETÉS','Des cartes plus ou moins rares','<ul><li><i class="dm" style="--c:#e9eef5"></i>Commun<em>85 %</em></li><li><i class="dm" style="--c:#3aa8ff"></i>Rare<em>10 %</em></li><li><i class="dm" style="--c:#c05cff"></i>Épique<em>4 %</em></li><li><i class="dm" style="--c:#ffb020"></i>Légendaire<em>1 %</em></li></ul><p style="margin:10px 0 0">Et une carte sur 30 sort en version <b>nacrée</b> ✦, encore plus belle.</p>'],
  [UIC.collection,'ÉTAPE 3 · COLLECTION','Ta collection','La page <b>Collection</b> montre toutes tes cartes. Filtre par univers ou par rareté, cherche un poisson, touche une carte pour voir sa fiche. Complète un album entier : tu gagnes <b>200 perles et 2 boosters</b>.'],
@@ -2285,8 +2286,8 @@ function showReveal(first){
     opening=false;
     {const bb=bestR();if((bb==='E'||bb==='L')&&!rm()){const col=bb==='L'?GOLD:VIO;[0,350,700].forEach(d=>setTimeout(()=>{for(let q=0;q<4;q++)emit(innerWidth*(.1+.8*Math.random()),-10,6,3.5,3.4,col,Math.PI/2,.12)},d))}}
     const nw=reveal.cards.filter(c=>c.isNew).length,o=owned();
-    $('veil-in').innerHTML=`<h2>Ta pêche</h2><p class="lede">${nw?`${nw} nouvelle${nw>1?'s':''} carte${nw>1?'s':''}.`:'Que des doublons cette fois, à revendre au marché.'} ${reveal.cards.some(c=>F[c.id].r==='L')?' Une légendaire !':reveal.cards.some(c=>F[c.id].r==='E')?' Une épique !':''} Collection : ${o} sur ${280}.${reveal.bonus?` Carte nacrée : +${reveal.bonus} perles.`:''}</p>
-     <div class="sumbar"><i style="width:${(100*o/280).toFixed(1)}%"></i></div>
+    $('veil-in').innerHTML=`<h2>Ta pêche</h2><p class="lede">${nw?`${nw} nouvelle${nw>1?'s':''} carte${nw>1?'s':''}.`:'Que des doublons cette fois, à revendre au marché.'} ${reveal.cards.some(c=>F[c.id].r==='L')?' Une légendaire !':reveal.cards.some(c=>F[c.id].r==='E')?' Une épique !':''} Collection : ${o} sur ${FT()}.${reveal.bonus?` Carte nacrée : +${reveal.bonus} perles.`:''}</p>
+     <div class="sumbar"><i style="width:${(100*o/FT()).toFixed(1)}%"></i></div>
      <div class="reveal">${reveal.cards.map((c,k)=>`<div class="deal d${F[c.id].r}" style="animation-delay:${k*220}ms">${cardHTML(F[c.id],{force:1,nac:c.nac,isNew:c.isNew,tag:'button'})}</div>`).join('')}</div>
      <div class="row">${BT()>0?`<button class="btn" id="rv-again">Ouvrir un autre (${BT()} en stock)</button>`:''}<button class="btn ghost" id="rv-close">Fermer</button></div>`;
   }
