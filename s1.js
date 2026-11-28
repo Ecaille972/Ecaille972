@@ -186,8 +186,8 @@ document.addEventListener('click',e=>{
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){const m=$('s1m');if(m&&m.classList.contains('on'))mapClose()}});
 /* ---------- Animation de déblocage ---------- */
-function showUnlock(z){const t=T(z);let e=$('s1u');if(!e){e=document.createElement('div');e.id='s1u';e.setAttribute('role','dialog');e.setAttribute('aria-modal','true');document.body.appendChild(e)}
-  e.innerHTML='<div class="s1in"><div class="s1k">NOUVEAU TERRITOIRE DÉBLOQUÉ</div><h2>'+esc(t.n)+'</h2><div class="s1pk" style="background-image:url(pack-'+z+'.webp)"></div><div class="s1sub">De nouvelles espèces t\'attendent !</div><div class="s1gf">+1 booster offert · '+esc(t.n)+'</div><button data-s1ux="'+z+'">Explorer ce territoire</button></div>';
+function showUnlock(q){const w=String(q).indexOf('w:')===0,z=w?q.slice(2):q,t=T(z);let e=$('s1u');if(!e){e=document.createElement('div');e.id='s1u';e.setAttribute('role','dialog');e.setAttribute('aria-modal','true');document.body.appendChild(e)}
+  e.innerHTML='<div class="s1in"><div class="s1k">'+(w?'NOUVELLES ESPÈCES DÉBLOQUÉES':'NOUVEAU TERRITOIRE DÉBLOQUÉ')+'</div><h2>'+esc(t.n)+'</h2><div class="s1pk" style="background-image:url(pack-'+z+'.webp)"></div><div class="s1sub">'+(w?'De nouvelles espèces rejoignent '+esc(t.n)+' !':'De nouvelles espèces t\'attendent !')+'</div><div class="s1gf">+1 booster offert · '+esc(t.n)+'</div><button data-s1ux="'+z+'">'+(w?'Découvrir':'Explorer ce territoire')+'</button></div>';
   e.classList.add('on');try{buzz([30,60,30])}catch(_){}}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-s1ux]');if(!b)return;
   const z=b.dataset.s1ux;$('s1u').classList.remove('on');S.theme=z;if(S.s1&&S.s1.q)S.s1.q=S.s1.q.slice(1);ecoCall('eco_s1_ack').then(()=>{save();renderAll()});location.hash='#boosters';renderAll()});
