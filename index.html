@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head><script>/*IMGV*/window.__V='20261126-213000';</script>
+<head><script>/*IMGV*/window.__V='20261128-160000';window.S1_PREVIEW=true;</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Écaille</title><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="theme-color" content="#01091a"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Écaille"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -2008,7 +2008,7 @@ function renderTuto(){const t=TUTO[tuIdx],last=tuIdx===TUTO.length-1;
  $('tu-box').innerHTML=`<div class="tu-ic">${t[0]}</div><div class="tu-st">${t[1]}</div><div class="tu-t" role="heading" aria-level="2">${t[2]}</div><div class="tu-p">${t[3]}</div><div class="tu-dots">${TUTO.map((_,i)=>`<i class="${i===tuIdx?'on':''}"></i>`).join('')}</div><div class="tu-bt">${tuIdx>0?'<button class="ghostb" id="tu-prev">Retour</button>':last?'':'<button class="ghostb" id="tu-skip">Passer</button>'}<button class="gold" id="tu-next">${last?'C\'est parti !':'Suivant'}</button></div>`}
 function openTuto(){tuIdx=0;renderTuto();$('tuto').classList.add('on')}
 function closeTuto(){$('tuto').classList.remove('on');if(S&&!S.tuto){S.tuto=1;S.nw='1';save()}}
-function maybeTuto(){if(S&&!S.tuto&&!document.body.classList.contains('authon')&&NEWUI())openTuto()}
+function maybeTuto(){if(window.S1_PREVIEW)return;if(S&&!S.tuto&&!document.body.classList.contains('authon')&&NEWUI())openTuto()}
 
 /* ===== Fenêtre « Nouveautés » ===== */
 const NEWS=[
@@ -2021,7 +2021,7 @@ function renderNews(){const t=NEWS[nwIdx],last=nwIdx===NEWS.length-1;
  $('nw-box').innerHTML=`${t[0]}<div class="nw-new">${t[1]}</div><div class="tu-t" role="heading" aria-level="2">${t[2]}</div><div class="tu-p">${t[3]}</div><div class="tu-dots">${NEWS.map((_,i)=>`<i class="${i===nwIdx?'on':''}"></i>`).join('')}</div><div class="tu-bt">${nwIdx>0?'<button class="ghostb" id="nw-prev">Retour</button>':'<button class="ghostb" id="nw-skip">Plus tard</button>'}<button class="gold" id="nw-next">${last?'C\'est parti !':'Suivant'}</button></div>`}
 function openNews(){nwIdx=0;renderNews();$('nwn').classList.add('on')}
 function closeNews(go){$('nwn').classList.remove('on');if(S&&S.nw!=='1'){S.nw='1';save()}if(go&&window.mkGo){try{document.querySelector('[data-pg=marche]').click();mkGo('amis')}catch(e){}}}
-function maybeNews(){if(S&&S.tuto&&S.nw!=='1'&&!document.body.classList.contains('authon')&&NEWUI()&&!$('tuto').classList.contains('on')&&!$('nwn').classList.contains('on'))openNews()}
+function maybeNews(){if(window.S1_PREVIEW)return;if(S&&S.tuto&&S.nw!=='1'&&!document.body.classList.contains('authon')&&NEWUI()&&!$('tuto').classList.contains('on')&&!$('nwn').classList.contains('on'))openNews()}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('#nw-next,#nw-prev,#nw-skip');if(!b)return;
  if(b.id==='nw-prev'){nwIdx--;return renderNews()}
  if(b.id==='nw-skip')return closeNews();
@@ -2161,11 +2161,11 @@ function ecoOpen(){
     if(DEV&&S.fast){cards.forEach(c=>c.on=true);reveal.idx=cards.length;return showReveal()}
     rm()?showReveal(true):(NEWUI()?(zipEl=null,showCut(),$('veil').hidden=false,$('veil').scrollTop=0):showPack())})}
 function startOpen(){
-  if(S.b<1||opening)return;if(ecoOn())return ecoOpen();opening=true;
+  if(opening||(window.S1?!S1.canOpen():S.b<1))return;if(ecoOn())return ecoOpen();opening=true;
   snap=JSON.stringify(S);
-  S.b--;S.opened++;Q().o++;addXP(XPR.open);if(S.b===MAX-1)S.last=Date.now();
+  if(window.S1)S1.take();else S.b--;S.opened++;Q().o++;addXP(XPR.open);if(S.b===MAX-1)S.last=Date.now();
   const cards=[];let bonus=0;
-  const lv=effLv(),th=S.theme||'large',zs=Object.keys(THEMES),zl=[0,1,2,3,4].map(()=>Math.random()<.55?th:zs.filter(z=>z!==th)[Math.floor(Math.random()*4)]);
+  const lv=effLv(),th=S.theme||'large',zs=window.S1?S1.unl():Object.keys(THEMES),oth=zs.filter(z=>z!==th),zl=[0,1,2,3,4].map(()=>Math.random()<.55||!oth.length?th:oth[Math.floor(Math.random()*oth.length)]);
   while(zl.filter(z=>z===th).length<3){const k=zl.findIndex(z=>z!==th);if(k<0)break;zl[k]=th}
   for(let i=0;i<5;i++){
     const zone=zl[i];
@@ -2330,7 +2330,7 @@ document.addEventListener('click',e=>{
   if(t.id==='bplus'||t.id==='pplus'){location.hash='#boutique';return}
   if(t.classList.contains('soon')||t.dataset.soon)return toast('Bientôt disponible');
   if(t.dataset.pack&&ecoOn()){const it=SHP.find(x=>x[0]===t.dataset.pack);if(!it)return;if(S.p<it[1])return toast('Pas assez de perles');ecoCall('eco_buy',{p_kind:'pack',p_key:it[0]}).then(r=>{if(r.err)return toast(r.err);S.theme=it[0];save();renderAll();toast('+1 booster '+THEMES[it[0]])});return}
-  if(t.dataset.pack){const it=SHP.find(x=>x[0]===t.dataset.pack);if(it&&S.p>=it[1]){S.p-=it[1];S.b++;S.theme=it[0];save();renderAll();toast('+1 booster '+THEMES[it[0]])}else toast('Pas assez de perles');return}
+  if(t.dataset.pack){const it=SHP.find(x=>x[0]===t.dataset.pack);if(it&&S.p>=it[1]){S.p-=it[1];(window.S1?S1.add(it[0],1):S.b++);S.theme=it[0];save();renderAll();toast('+1 booster '+THEMES[it[0]])}else toast('Pas assez de perles');return}
   if(t.dataset.offer&&ecoOn()){const it=OFF[+t.dataset.offer];if(!it)return;if(S.p<it[2])return toast('Pas assez de perles');ecoCall('eco_buy',{p_kind:'offer',p_key:String(+t.dataset.offer)}).then(r=>{if(r.err)return toast(r.err);renderAll();toast('+'+it[0]+' boosters'+(it[1]?' et '+it[1]+' perles':'')+' !')});return}
   if(t.dataset.offer){const it=OFF[+t.dataset.offer];if(S.p>=it[2]){S.p-=it[2];S.b+=it[0];S.p+=it[1];save();renderAll();toast('+'+it[0]+' boosters'+(it[1]?' et '+it[1]+' perles':'')+' !')}else toast('Pas assez de perles');return}
   if(false){const it=SHP.find(x=>x[0]==t.dataset.buy);if(it&&S.p>=it[1]){S.p-=it[1];S.b+=it[0];save();renderAll()}return}
@@ -2424,7 +2424,7 @@ body.authon{overflow:hidden}
 (function(){
 var CFG=window.ECAILLE_CFG={url:'https://uclukztrbfkdynfozqnh.supabase.co',key:'sb_publishable_RpQHdfjWbGyCTIEg2Rmj-w_ZzwGzRqb'};
 var SK='ecaille-auth',sess=null,view='login',busy=false,me=null;
-var local=/[?&]local=1\b/.test(location.search);
+var local=!!window.S1_PREVIEW||/[?&]local=1\b/.test(location.search);
 var $=function(i){return document.getElementById(i)};
 function rd(){try{return JSON.parse(localStorage.getItem(SK))}catch(e){return null}}
 function wr(s){try{s?localStorage.setItem(SK,JSON.stringify(s)):localStorage.removeItem(SK)}catch(e){}}
@@ -2557,6 +2557,6 @@ document.addEventListener('visibilitychange',function(){if(!document.hidden)chec
 setTimeout(check,20000);
 })();
 </script>
-<script>['td','pz','cx'].forEach(function(n){var s=document.createElement('script');s.src=n+'.js?v='+(window.__V||'1');s.async=false;document.body.appendChild(s)})</script>
+<script>['td','pz','cx','s1'].forEach(function(n){var s=document.createElement('script');s.src=n+'.js?v='+(window.__V||'1');s.async=false;document.body.appendChild(s)})</script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))</script></body>
 </html>
