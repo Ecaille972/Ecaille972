@@ -2439,7 +2439,7 @@ function fresh(){ // renvoie une promesse de token valide
   if(!sess)return Promise.resolve(null);
   if(sess.expires_at-60>Date.now()/1000)return Promise.resolve(sess.access_token);
   return api('/auth/v1/token?grant_type=refresh_token',{b:{refresh_token:sess.refresh_token}}).then(function(r){if(r.ok&&setSess(r.j))return sess.access_token;if(r.s===0)return sess.access_token;sess=null;wr(null);return null})}
-function rpc(fn,args){return fresh().then(function(t){if(!t)return{ok:false,s:401,j:{message:'not_authenticated'}};return api('/rest/v1/rpc/'+fn,{tok:t,b:args||{}})})}
+function rpc(fn,args){return fresh().then(function(t){if(!t)return{ok:false,s:401,j:{message:'not_authenticated'}};return api('/rest/v1/rpc/'+fn,{tok:t,b:args||{}}).then(function(r){if(r&&!r.ok&&r.j&&/beta_paused/.test(JSON.stringify(r.j))){sess=null;wr(null);try{location.reload()}catch(e){}}return r})})}
 window.ecailleRpc=rpc;
 
 function box(){var d=$('auth');if(d)return d;d=document.createElement('div');d.id='auth';d.setAttribute('role','dialog');d.setAttribute('aria-modal','true');d.setAttribute('aria-label','Connexion à Écaille');document.body.appendChild(d);return d}
