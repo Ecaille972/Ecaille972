@@ -120,8 +120,8 @@ const css=document.createElement('style');css.textContent=`
 #s1u button.s{background:none;color:#8d9bbd;margin-top:6px;font-weight:600}
 @keyframes s1f{to{opacity:1}}@keyframes s1pop{to{opacity:1;transform:scale(1)}}@keyframes s1gl{50%{filter:drop-shadow(0 0 26px rgba(255,184,31,.8))}}
 #s1i{z-index:96;overflow:hidden}
-#s1i .bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.35;transition:background-image .4s}
-#s1i .sh{position:absolute;inset:0;background:linear-gradient(rgba(5,7,13,.5),rgba(5,7,13,.96) 70%)}
+#s1i .bg{display:none}
+#s1i .sh{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,#16264f 0%,#0a1330 45%,#05070d 80%)}
 #s1i .sl{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:24px 22px max(26px,env(safe-area-inset-bottom));text-align:center}
 #s1i .vis{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
 #s1i .vis .fan{position:relative;width:220px;height:250px}#s1i .vis .fan .fc{position:absolute;width:130px;top:20px}
@@ -129,7 +129,7 @@ const css=document.createElement('style');css.textContent=`
 #s1i .vis .six{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 10px;width:100%;max-width:330px}
 #s1i .vis .six div{text-align:center;font-size:11.5px;color:#c9d3ea}#s1i .vis .six i{display:block;height:92px;background-size:contain;background-repeat:no-repeat;background-position:center;margin-bottom:4px}
 #s1i .vis .six b{display:block;color:#ffb81f;font-size:12px}
-#s1i .vis .bigp{width:150px;height:260px;background-size:contain;background-repeat:no-repeat;background-position:center;animation:s1gl 2.4s ease-in-out infinite}
+#s1i .vis .bigp{width:190px;height:330px;background-size:contain;background-repeat:no-repeat;background-position:center;animation:s1gl 2.4s ease-in-out infinite}
 #s1i h2{margin:14px 0 8px;font-size:26px;font-style:italic;font-weight:800;text-transform:uppercase;line-height:1.1}
 #s1i p{margin:0 0 16px;font-size:15px;line-height:1.45;color:#c9d3ea}
 #s1i .dots{display:flex;gap:7px;justify-content:center;margin-bottom:14px}#s1i .dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2)}#s1i .dots i.on{background:#ffb81f;width:22px;border-radius:4px}
