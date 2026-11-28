@@ -1,0 +1,6 @@
+# Le jeu ne doit répondre que sur ecaille.games
+# (les aperçus deploy-preview-N--… ne sont pas concernés)
+https://mellow-cactus-fdc9fa.netlify.app/*        https://ecaille.games/:splat  301!
+http://mellow-cactus-fdc9fa.netlify.app/*         https://ecaille.games/:splat  301!
+https://main--mellow-cactus-fdc9fa.netlify.app/*  https://ecaille.games/:splat  301!
+https://www.ecaille.games/*                       https://ecaille.games/:splat  301!
