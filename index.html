@@ -2450,7 +2450,7 @@ function box(){var d=$('auth');if(d)return d;d=document.createElement('div');d.i
 function show(on){box().classList.toggle('on',!!on);document.body.classList.toggle('authon',!!on)}
 function msg(t,ok){var e=$('a-err');if(e){e.textContent=t||'';e.className='ae'+(ok?' ok':'')}}
 function render(){
-  var d=box(),h='<div class="ac"><div class="ah"><div class="al">ÉCAILLE</div><div class="as">Bêta privée</div></div>';
+  var d=box(),h='<div class="ac"><div class="ah"><div class="al">ÉCAILLE</div><div class="as">Le jeu de cartes des océans</div></div>';
   if(view==='pseudo'){
     h+='<div class="as" style="text-align:center;margin-bottom:6px;font-size:15px;color:#fff">Choisis ton pseudo</div><form id="a-f" novalidate><label for="a-ps">Pseudo</label><input id="a-ps" autocomplete="username" autocapitalize="none" maxlength="16" placeholder="ex. PecheurDu972"><div class="ah2" id="a-psh">3 à 16 caractères : lettres, chiffres, _</div>'+
       (invReq?'<label for="a-inv">Code d’invitation</label><input id="a-inv" autocapitalize="characters" autocomplete="off" placeholder="Code reçu de Mathieu" value="'+savedInv().replace(/[^A-Z0-9]/g,'')+'">':'')+
